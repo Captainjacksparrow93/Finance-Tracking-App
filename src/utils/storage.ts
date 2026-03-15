@@ -1,8 +1,6 @@
 import { AppData } from '../types';
 
-const STORAGE_KEY = 'family_finance_tracker_v1';
-
-const defaultData: AppData = {
+export const defaultData: AppData = {
   incomes: [],
   savings: [],
   expenses: [],
@@ -15,16 +13,16 @@ const defaultData: AppData = {
   },
 };
 
-export function loadData(): AppData {
+export async function loadData(): Promise<AppData> {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return defaultData;
-    const parsed = JSON.parse(raw) as Partial<AppData>;
+    const res = await fetch('/api/data');
+    if (!res.ok) return defaultData;
+    const parsed = await res.json() as Partial<AppData>;
     return {
-      incomes: parsed.incomes ?? [],
-      savings: parsed.savings ?? [],
-      expenses: parsed.expenses ?? [],
-      goals: parsed.goals ?? [],
+      incomes:              parsed.incomes              ?? [],
+      savings:              parsed.savings              ?? [],
+      expenses:             parsed.expenses             ?? [],
+      goals:                parsed.goals                ?? [],
       businessTransactions: parsed.businessTransactions ?? [],
       settings: { ...defaultData.settings, ...(parsed.settings ?? {}) },
     };
@@ -33,11 +31,15 @@ export function loadData(): AppData {
   }
 }
 
-export function saveData(data: AppData): void {
+export async function saveData(data: AppData): Promise<void> {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    await fetch('/api/data', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
   } catch {
-    console.error('Failed to persist data to localStorage');
+    console.error('Failed to persist data to server');
   }
 }
 
