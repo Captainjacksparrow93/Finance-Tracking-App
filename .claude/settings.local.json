@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /c/Users/\"Dhruv Desai\"/Downloads/Finance-Tracker-claude-finance-savings-tracker-VP35o/Finance-Tracker-claude-finance-savings-tracker-VP35o)",
+      "Bash(npm install)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npm --version)",
+      "Bash(node --version)",
+      "Bash(git init)",
+      "Bash(git remote add origin https://github.com/Captainjacksparrow93/Finance-Tracker.git)",
+      "Bash(git add index.html package.json package-lock.json postcss.config.js tailwind.config.js tsconfig.json tsconfig.node.json vite.config.ts src/ public/)",
+      "Bash(git commit:*)",
+      "Bash(git push --force origin master)"
+    ]
+  }
+}
