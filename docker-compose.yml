@@ -1,0 +1,16 @@
+services:
+  finance-tracker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: finance-tracker
+    ports:
+      - "1793:1793"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:1793"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
