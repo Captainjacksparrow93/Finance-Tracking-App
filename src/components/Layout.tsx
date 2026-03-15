@@ -8,6 +8,7 @@ import {
   Target,
   Briefcase,
   TrendingUp,
+  LogOut,
 } from 'lucide-react';
 
 interface NavItem {
@@ -29,10 +30,11 @@ const NAV_ITEMS: NavItem[] = [
 interface LayoutProps {
   activeTab: ActiveTab;
   onTabChange: (tab: ActiveTab) => void;
+  onLogout: () => void;
   children: React.ReactNode;
 }
 
-export default function Layout({ activeTab, onTabChange, children }: LayoutProps) {
+export default function Layout({ activeTab, onTabChange, onLogout, children }: LayoutProps) {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Top Header */}
@@ -43,9 +45,19 @@ export default function Layout({ activeTab, onTabChange, children }: LayoutProps
               <TrendingUp className="text-indigo-600" size={22} />
               <span className="font-bold text-slate-800 text-base">Family Finance Tracker</span>
             </div>
-            <span className="text-xs text-slate-400 hidden sm:block">
-              All data stored locally — private &amp; secure
-            </span>
+            <div className="flex items-center gap-4">
+              <span className="text-xs text-slate-400 hidden sm:block">
+                All data stored locally — private &amp; secure
+              </span>
+              <button
+                onClick={onLogout}
+                className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-rose-600 transition-colors"
+                title="Sign out"
+              >
+                <LogOut size={15} />
+                <span className="hidden sm:inline">Sign out</span>
+              </button>
+            </div>
           </div>
         </div>
       </header>
